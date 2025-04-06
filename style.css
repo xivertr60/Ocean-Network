@@ -36,4 +36,62 @@ body {
         stroke-dashoffset: 3000;
     }
 }
+-------------------------------------
+/* 🌍 Estilos generales */
+body {
+    background: #000; /* Fondo negro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* 🔥 Degradado animado detrás del panel */
+.gradient-bg {
+    position: absolute;
+    width: 900px; /* Tamaño fijo */
+    height: 50px; /* Tamaño fijo */
+    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffdd, #2200ff, #7700ff);
+    background-size: 400% 400%;
+    animation: gradientAnimation 6s infinite alternate ease-in-out;
+    filter: blur(30px); /* Suaviza el efecto */
+    border-radius: 20px;
+    z-index: -1; /* Detrás del panel */
+}
+
+/* 🎨 Panel con bordes redondeados */
+.panel-container {
+    position: absolute;
+    width: 900px; /* Tamaño fijo */
+    height: 50px; /* Tamaño fijo */
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 🖼 Panel con fondo negro */
+.panel-content {
+    width: 200%;
+    height: 200%;
+    background-color: black; /* Interior completamente negro */
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 24px;
+    font-family: Arial, sans-serif;
+}
+
+/* 🔄 Animación del cambio de colores */
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+}
 
