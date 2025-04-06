@@ -51,7 +51,7 @@ body {
 body {
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* 🔥 Alinea los elementos hacia la parte superior */
+    align-items: center; /* 🔥 Alinea los elementos hacia la parte superior */
     height: 100vh;
     height: 100vh;
     background-color: #000;
@@ -61,7 +61,7 @@ body {
     width: 20vh; /* Tamaño reducido */
     height: 20vh; /* Tamaño reducido */
     margin: 0 1vh; /* Ajuste del espacio entre elementos */
-    margin: -5vh 1vh 0 1vh; /* 🔥 Margen negativo para subir las letras */
+    margin: 10vh 1vh 0 1vh; /* 🔥 Margen negativo para subir las letras */
 }
 
 .cls-1 {
