@@ -11,8 +11,8 @@ body {
 /* 🔥 Degradado animado detrás del panel */
 .gradient-bg {
     position: absolute;
-    width: 900px; /* Tamaño fijo */
-    height: 50px; /* Tamaño fijo */
+    width: 400px; /* Tamaño fijo */
+    height: 900px; /* Tamaño fijo */
     background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffdd, #2200ff, #7700ff);
     background-size: 400% 400%;
     animation: gradientAnimation 6s infinite alternate ease-in-out;
@@ -24,8 +24,8 @@ body {
 /* 🎨 Panel con bordes redondeados */
 .panel-container {
     position: absolute;
-    width: 900px; /* Tamaño fijo */
-    height: 50px; /* Tamaño fijo */
+    width: 400px; /* Tamaño fijo */
+    height: 900px; /* Tamaño fijo */
     border-radius: 20px;
     display: flex;
     justify-content: center;
