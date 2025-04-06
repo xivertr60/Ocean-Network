@@ -1,3 +1,52 @@
+/* 🌍 Estilos generales */
+body {
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+/* 🎨 Panel con borde animado */
+.panel-container {
+    position: absolute;
+    top: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 85%;
+    height: 80vh;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black; /* Interior negro */
+    z-index: 1;
+    box-shadow: 0 0 15px 5px #ff0000; /* Inicialmente rojo */
+    animation: borderColorShift 6s infinite alternate ease-in-out;
+}
+
+/* 🔄 Animación del borde cambiando de color */
+@keyframes borderColorShift {
+    0% {
+        box-shadow: 0 0 15px 5px #ff0000; /* Rojo */
+    }
+    25% {
+        box-shadow: 0 0 20px 7px #ff7300; /* Naranja */
+    }
+    50% {
+        box-shadow: 0 0 25px 10px #fffb00; /* Amarillo */
+    }
+    75% {
+        box-shadow: 0 0 30px 12px #48ff00; /* Verde */
+    }
+    100% {
+        box-shadow: 0 0 35px 15px #2200ff; /* Azul */
+    }
+}
+
+
 
 body {
     display: flex;
