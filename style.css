@@ -1,4 +1,39 @@
 body {
-    background-color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #000;
+}
+
+.letter {
+    width: 35vh;
+    height: 35vh;
+    margin: 0 2vh;
+}
+
+.cls-1 {
+    fill: none;
+    stroke: #000;
+    stroke-miterlimit: 10;
+    stroke-width: 10px;
+    stroke-linecap: round;
+    stroke-dasharray: 500;
+    animation: lines 3s infinite;
+}
+
+.dot {
+    stroke-dasharray: 500;
+    stroke: var(--color);
+}
+
+.stem {
+    stroke: var(--color);
+}
+
+@keyframes lines {
+    100% {
+        stroke-dashoffset: 3000;
+    }
 }
 
