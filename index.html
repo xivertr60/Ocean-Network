@@ -1,81 +1,118 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>¡Te he troleado!</title>
-    <style>
-        body {
-            margin: 0;
-            background-color: white;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            font-family: Arial, sans-serif;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lazors - Minecraft Servidor Marino</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      background: #0c1b2a;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+    }
 
-        h1 {
-            font-size: 3em;
-            color: red;
-        }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
 
-        button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 1.2em;
-            cursor: pointer;
-        }
-    </style>
+    .glass {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 1rem;
+    }
+  </style>
 </head>
 <body>
-    <h1>copilot!</h1>
-    <button id="fullscreenButton" onclick="activarPantallaCompleta()">entrar</button>
+  <!-- Three.js canvas will go here -->
+  <canvas id="bg"></canvas>
 
-    <script>
-        function activarPantallaCompleta() {
-            let elem = document.documentElement;
-            if (elem.requestFullscreen) {
-                elem.requestFullscreen();
-            } else if (elem.mozRequestFullScreen) {
-                elem.mozRequestFullScreen();
-            } else if (elem.webkitRequestFullscreen) {
-                elem.webkitRequestFullscreen();
-            } else if (elem.msRequestFullscreen) {
-                elem.msRequestFullscreen();
-            }
+  <main class="min-h-screen flex flex-col items-center justify-center text-center px-4">
+    <section class="glass p-8 max-w-3xl shadow-2xl mt-20">
+      <h1 class="text-5xl font-extrabold text-cyan-400 mb-4">🌊 LazorsMC</h1>
+      <p class="text-xl mb-6 text-cyan-100">Servidor Minecraft con temática submarina</p>
+      <a href="#" class="bg-cyan-500 hover:bg-cyan-400 transition px-6 py-3 rounded-full text-white font-semibold text-lg">Unirse al Servidor</a>
+      <p class="mt-2 text-sm text-cyan-200">IP: <code class="bg-cyan-900 px-2 py-1 rounded">play.lazorsmc.com</code></p>
+    </section>
 
-            solicitarPermisosNotificaciones(); // Activar notificaciones
-            iniciarAutoClick(); // Activar el auto-click después del permiso
-        }
+    <section class="glass mt-20 p-8 max-w-4xl">
+      <h2 class="text-3xl font-bold mb-4">🌐 Exploración Minecraft Submarina</h2>
+      <p class="text-cyan-100">Sumérgete en un mundo de cubos bajo el mar, lleno de ruinas, criaturas abisales y tecnología mágica. En Lazors, cada bloque cuenta tu historia entre las profundidades del servidor.</p>
+    </section>
 
-        // Solicitar permisos de notificación
-        function solicitarPermisosNotificaciones() {
-            if ("Notification" in window) {
-                Notification.requestPermission().then(permission => {
-                    if (permission === "granted") {
-                        setInterval(() => {
-                            new Notification("¡Te he troleado!");
-                        }, 2000); // Notificaciones cada 2 segundos
-                    }
-                });
-            }
-        }
+    <section class="glass mt-20 p-8 max-w-6xl">
+      <h2 class="text-3xl font-bold mb-6">⚓ Facciones Minecraft</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-blue-900 p-4 rounded-xl shadow-md">
+          <h3 class="text-xl font-bold text-cyan-300">Abyssion</h3>
+          <p>Ruinas tecnológicas con guardianes de Redstone y secretos antiguos.</p>
+        </div>
+        <div class="bg-blue-900 p-4 rounded-xl shadow-md">
+          <h3 class="text-xl font-bold text-pink-300">Corallium</h3>
+          <p>Palacios coralinos construidos por artesanos y constructores legendarios.</p>
+        </div>
+        <div class="bg-blue-900 p-4 rounded-xl shadow-md">
+          <h3 class="text-xl font-bold text-yellow-300">Nautilux</h3>
+          <p>Barcos flotantes y bases secretas de los piratas del abismo.</p>
+        </div>
+      </div>
+    </section>
+  </main>
 
-        // Activar auto-click cada 0.001 segundos después del permiso del usuario
-        function iniciarAutoClick() {
-            setInterval(() => {
-                document.getElementById("fullscreenButton").click();
-            }, 100); // Auto-click cada 0.1 segundos
-        }
+  <footer class="text-center py-6 mt-20 text-cyan-300">
+    <p>&copy; 2025 LazorsMC - Inspirado en Minecraft</p>
+  </footer>
 
-        // Detectar interacción del usuario y ejecutar la función
-        document.addEventListener("click", activarPantallaCompleta);
-        document.addEventListener("touchstart", activarPantallaCompleta);
-    </script>
+  <script>
+    // THREE.js basic underwater particles
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg'), alpha: true });
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    camera.position.z = 10;
+
+    const particlesGroup = new THREE.Group();
+    const particlesGeometry = new THREE.BufferGeometry();
+    const particlesCount = 1500;
+    const positions = new Float32Array(particlesCount * 3);
+
+    for (let i = 0; i < particlesCount; i++) {
+      positions[i * 3 + 0] = (Math.random() - 0.5) * 30; // x
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 30; // y
+      positions[i * 3 + 2] = (Math.random() - 0.5) * 20 + 10; // z (más cerca de la cámara)
+    }
+
+    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const material = new THREE.PointsMaterial({ color: 0x00ffff, size: 0.2 });
+    const particles = new THREE.Points(particlesGeometry, material);
+    particlesGroup.add(particles);
+    scene.add(particlesGroup);
+
+    function animate() {
+      requestAnimationFrame(animate);
+      particlesGroup.rotation.y += 0.0005;
+      particlesGroup.rotation.x += 0.0002;
+      renderer.render(scene, camera);
+    }
+
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
 </body>
 </html>
-
 
 
