@@ -79,9 +79,6 @@
       </div>
     </section>
   </main>
-  <footer class="text-center py-6 mt-20 text-cyan-300">
-    <p>&copy; 2025 LazorsMC - hecho por xivertr</p>
-  </footer>
 
   <!-- Panel de Rangos -->
   <div id="panelRangos" class="modal bg-black bg-opacity-80 backdrop-blur-sm hidden">
@@ -218,11 +215,13 @@
     const velocities = new Float32Array(particlesCount);
 
     for (let i = 0; i < particlesCount; i++) {
-      positions[i * 3 + 0] = (Math.random() - 0.5) * 30;
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 30;
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 20 + 10;
-      velocities[i] = 0.01 + Math.random() * 0.02;
-    }
+  positions[i * 3 + 0] = (Math.random() - 0.5) * window.innerWidth; // Extender a todo el ancho de la pantalla
+  positions[i * 3 + 1] = (Math.random() - 0.5) * window.innerHeight; // Extender a toda la altura
+  positions[i * 3 + 2] = (Math.random() - 0.5) * 50; // Profundidad ajustada
+  velocities[i] = 0.01 + Math.random() * 0.02;
+}
+
+
 
     particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     const material = new THREE.PointsMaterial({ color: 0x00ffff, size: 0.15, transparent: true, opacity: 0.7 });
@@ -251,4 +250,60 @@
   </script>
 </body>
 </html>
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Burbujas Animadas</title>
+    <style>
+        body {
+          
+            overflow: hidden;
+        }
+
+        .burbuja {
+            position: absolute;
+            bottom: -300px;
+            width: 20px;
+            height: 20px;
+            background: rgba(173, 216, 230, 0.7);
+            border-radius: 50%;
+            animation: flotar 4s linear infinite;
+        }
+
+        @keyframes flotar {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <script>
+        function crearBurbuja() {
+            const burbuja = document.createElement("div");
+            burbuja.classList.add("burbuja");
+            burbuja.style.left = `${Math.random() * window.innerWidth}px`;
+            burbuja.style.width = `${Math.random() * 30 + 10}px`;
+            burbuja.style.height = burbuja.style.width;
+            document.body.appendChild(burbuja);
+
+            setTimeout(() => {
+                burbuja.remove();
+            }, 4000);
+        }
+
+        setInterval(crearBurbuja, 500);
+    </script>
+</body>
+</html>
+
 
