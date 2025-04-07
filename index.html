@@ -120,44 +120,40 @@
   </div>
 </div>
 
-<!-- Panel Modal -->
-<div id="modal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden">
-  <div class="bg-white text-black rounded-xl p-6 max-w-md w-full shadow-xl text-center">
-    <h2 id="modalTitle" class="text-xl font-bold mb-2"></h2>
-    <p id="modalText" class="mb-4"></p>
-    <button onclick="cerrarModal()" class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded text-white">Cerrar</button>
+  <!-- Panel de Chat -->
+  <div id="chatPanel" class="modal bg-blue-950 bg-opacity-90 text-white hidden">
+    <div class="bg-blue-800 p-6 rounded-lg shadow-xl w-full max-w-xl">
+      <h2 class="text-2xl font-bold mb-4">💬 Chat del Mar</h2>
+      <div id="chatMessages" class="bg-blue-900 p-4 rounded h-64 overflow-y-scroll mb-4"></div>
+      <form onsubmit="enviarMensaje(event)" class="flex">
+        <input id="mensajeInput" class="flex-1 px-4 py-2 rounded-l bg-white text-black" placeholder="Escribe tu mensaje..." />
+        <button class="bg-cyan-500 px-4 py-2 rounded-r hover:bg-cyan-400">Enviar</button>
+      </form>
+      <button onclick="cerrarChat()" class="mt-4 bg-red-500 hover:bg-red-600 px-4 py-2 rounded">Cerrar Chat</button>
+    </div>
   </div>
-</div>
 
-<script>
-  function abrirPanelRangos() {
-    document.getElementById('panelRangos').classList.remove('hidden');
-  }
+  <!-- Nombre antes del chat -->
+  <div id="usernamePrompt" class="modal bg-black bg-opacity-90 text-white hidden">
+    <div class="bg-blue-800 p-6 rounded-lg shadow-xl w-full max-w-md">
+      <h2 class="text-xl font-bold mb-4">Antes de entrar al chat</h2>
+      <input id="nombreUsuario" class="w-full px-4 py-2 rounded text-black" placeholder="Ingresa tu nombre..." />
+      <button onclick="entrarAlChat()" class="mt-4 bg-green-500 hover:bg-green-600 px-4 py-2 rounded w-full">Entrar</button>
+    </div>
+  </div>
 
-  function cerrarPanelRangos() {
-    document.getElementById('panelRangos').classList.add('hidden');
-  }
+  <!-- Modal General -->
+  <div id="modal" class="modal bg-black bg-opacity-70 text-black hidden">
+    <div class="bg-white rounded-xl p-6 max-w-md w-full shadow-xl text-center">
+      <h2 id="modalTitle" class="text-xl font-bold mb-2"></h2>
+      <p id="modalText" class="mb-4"></p>
+      <button onclick="cerrarModal()" class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded text-white">Cerrar</button>
+    </div>
+  </div>
 
-  function mostrarTicket(nombre) {
-    document.getElementById('modalTitle').innerText = `Obtener Rango ${nombre}`;
-    document.getElementById('modalText').innerHTML = `Para obtener el rango <strong>${nombre}</strong>, debes abrir un ticket en nuestro Discord.<br><br><a href="https://discord.gg/MWFy9YMTRx" target="_blank" class="text-cyan-600 underline">Ir a Discord</a>`;
-    document.getElementById('modal').classList.remove('hidden');
-  }
-
-  function mostrarOpciones(nombre, descripcion, precio) {
-    document.getElementById('modalTitle').innerText = `Opciones de ${nombre}`;
-    document.getElementById('modalText').innerHTML = `<strong>Descripción:</strong> ${descripcion}<br><strong>Precio:</strong> ${precio}`;
-    document.getElementById('modal').classList.remove('hidden');
-  }
-
-  function cerrarModal() {
-    document.getElementById('modal').classList.add('hidden');
-  }
-</script>
-
-
-  <!-- Scripts -->
   <script>
+    let usuario = "";
+
     function abrirPanelRangos() {
       document.getElementById('panelRangos').style.display = 'flex';
     }
@@ -166,13 +162,48 @@
       document.getElementById('panelRangos').style.display = 'none';
     }
 
-    function mostrarTicket() {
-      alert("Para obtener este rango, necesitas abrir un ticket en nuestro Discord.");
-      window.open("https://discord.gg/MWFy9YMTRx", "_blank");
+    function mostrarTicket(nombre) {
+      document.getElementById('modalTitle').innerText = `Obtener Rango ${nombre}`;
+      document.getElementById('modalText').innerHTML = `Para obtener el rango <strong>${nombre}</strong>, abre un ticket en nuestro Discord.<br><br><a href="https://discord.gg/MWFy9YMTRx" target="_blank" class="text-cyan-600 underline">Ir a Discord</a>`;
+      document.getElementById('modal').style.display = 'flex';
     }
 
-    function mostrarOpciones(nombre, beneficios, precio) {
-      alert(`Detalles del rango ${nombre}:\n\nBeneficios: ${beneficios}\nPrecio: ${precio}`);
+    function mostrarOpciones(nombre, descripcion, precio) {
+      document.getElementById('modalTitle').innerText = `Opciones de ${nombre}`;
+      document.getElementById('modalText').innerHTML = `<strong>Descripción:</strong> ${descripcion}<br><strong>Precio:</strong> ${precio}`;
+      document.getElementById('modal').style.display = 'flex';
+    }
+
+    function cerrarModal() {
+      document.getElementById('modal').style.display = 'none';
+    }
+
+    function abrirChat() {
+      document.getElementById('usernamePrompt').style.display = 'flex';
+    }
+
+    function entrarAlChat() {
+      const nombre = document.getElementById('nombreUsuario').value.trim();
+      if (nombre === "") return alert("Por favor, ingresa un nombre.");
+      usuario = nombre;
+      document.getElementById('usernamePrompt').style.display = 'none';
+      document.getElementById('chatPanel').style.display = 'flex';
+    }
+
+    function cerrarChat() {
+      document.getElementById('chatPanel').style.display = 'none';
+    }
+
+    function enviarMensaje(e) {
+      e.preventDefault();
+      const input = document.getElementById('mensajeInput');
+      const mensaje = input.value.trim();
+      if (mensaje === "") return;
+      const div = document.createElement("div");
+      div.className = "text-left mb-1";
+      div.innerHTML = `<strong>${usuario}:</strong> ${mensaje}`;
+      document.getElementById('chatMessages').appendChild(div);
+      input.value = "";
     }
 
     // Partículas
@@ -223,5 +254,3 @@
   </script>
 </body>
 </html>
-
-
