@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -27,12 +28,11 @@
       backdrop-filter: blur(10px);
       border-radius: 1rem;
     }
-    .modal {
+    .modal, #chatPanel, #usernamePrompt {
       position: fixed;
       top: 0; left: 0;
       width: 100vw;
       height: 100vh;
-      background-color: rgba(0, 8, 20, 0.95);
       z-index: 50;
       display: none;
       flex-direction: column;
@@ -40,11 +40,14 @@
       justify-content: center;
       padding: 2rem;
     }
+    #chatMessages {
+      height: 300px;
+      overflow-y: auto;
+    }
   </style>
 </head>
 <body>
   <canvas id="bg"></canvas>
-
   <main class="min-h-screen flex flex-col items-center justify-center text-center px-4">
     <section class="glass p-8 max-w-3xl shadow-2xl mt-20">
       <h1 class="text-5xl font-extrabold text-cyan-400 mb-4">🌊 LazorsMC</h1>
@@ -69,35 +72,30 @@
           <h3 class="text-xl font-bold text-pink-300">🎉 Eventos</h3>
           <p>Participa en eventos especiales y concursos únicos.</p>
         </button>
-        <button class="bg-blue-900 p-4 rounded-xl shadow-md hover:scale-105 transition">
+        <button onclick="abrirChat()" class="bg-blue-900 p-4 rounded-xl shadow-md hover:scale-105 transition">
           <h3 class="text-xl font-bold text-yellow-300">💬 Chat</h3>
           <p>Conéctate con la comunidad en tiempo real.</p>
         </button>
       </div>
     </section>
   </main>
-    <footer class="text-center py-6 mt-20 text-cyan-300">
-    <p>&copy; 2025 LazorsMC - hecho por xivertr</p>
-  </footer>
 
-  <!-- Panel Rangos -->
- <!-- Panel de Rangos -->
-<div id="panelRangos" class="fixed inset-0 bg-black bg-opacity-80 backdrop-blur-sm z-50 hidden flex flex-col items-center justify-center p-8 overflow-auto">
-  <button onclick="cerrarPanelRangos()" class="absolute top-4 right-4 text-white bg-red-500 hover:bg-red-600 px-4 py-2 rounded">Cerrar</button>
-  <h2 class="text-4xl font-bold text-cyan-300 mb-8">🛡️ Rangos Disponibles</h2>
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-6xl">
-    <!-- Rango 1 -->
-    <div class="bg-gradient-to-br from-blue-800 to-cyan-900 p-6 rounded-xl shadow-lg text-white">
-      <h3 class="text-2xl font-bold mb-2">🧱 Rango Abismal</h3>
-      <p>Acceso a zonas ocultas, doble salto, y tridente encantado.</p>
-      <div class="flex gap-2 mt-4">
-        <button onclick="mostrarTicket('Abismal')" class="bg-cyan-600 hover:bg-cyan-500 px-4 py-2 rounded">Obtener</button>
-        <button onclick="mostrarOpciones('Abismal', 'Zonas ocultas, doble salto, tridente encantado', '4.99€')" class="bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded">Opciones</button>
+  <!-- Panel de Rangos -->
+  <div id="panelRangos" class="modal bg-black bg-opacity-80 backdrop-blur-sm hidden">
+    <button onclick="cerrarPanelRangos()" class="absolute top-4 right-4 text-white bg-red-500 hover:bg-red-600 px-4 py-2 rounded">Cerrar</button>
+    <h2 class="text-4xl font-bold text-cyan-300 mb-8">🛡️ Rangos Disponibles</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-6xl">
+      
+      
+      <div class="bg-gradient-to-br from-blue-800 to-cyan-900 p-6 rounded-xl shadow-lg text-white">
+        <h3 class="text-2xl font-bold mb-2">🧱 Rango Abismal</h3>
+        <p>Acceso a zonas ocultas, doble salto, y tridente encantado.</p>
+        <div class="flex gap-2 mt-4">
+          <button onclick="mostrarTicket('Abismal')" class="bg-cyan-600 hover:bg-cyan-500 px-4 py-2 rounded">Obtener</button>
+          <button onclick="mostrarOpciones('Abismal', 'Zonas ocultas, doble salto, tridente encantado', '4.99€')" class="bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded">Opciones</button>
+        </div>
       </div>
-    </div>
-
-    <!-- Rango 2 -->
-    <div class="bg-gradient-to-br from-pink-800 to-purple-900 p-6 rounded-xl shadow-lg text-white">
+<div class="bg-gradient-to-br from-pink-800 to-purple-900 p-6 rounded-xl shadow-lg text-white">
       <h3 class="text-2xl font-bold mb-2">🪸 Rango Corallium</h3>
       <p>Montura marina, hogar acuático, y armadura coralina.</p>
       <div class="flex gap-2 mt-4">
@@ -105,9 +103,7 @@
         <button onclick="mostrarOpciones('Corallium', 'Montura marina, hogar acuático, armadura coralina', '7.99€')" class="bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded">Opciones</button>
       </div>
     </div>
-
-    <!-- Rango 3 -->
-    <div class="bg-gradient-to-br from-yellow-700 to-orange-800 p-6 rounded-xl shadow-lg text-white">
+ <div class="bg-gradient-to-br from-yellow-700 to-orange-800 p-6 rounded-xl shadow-lg text-white">
       <h3 class="text-2xl font-bold mb-2">⚓ Rango Nautilux</h3>
       <p>Base secreta, mapas de tesoro y navegación avanzada.</p>
       <div class="flex gap-2 mt-4">
@@ -115,10 +111,8 @@
         <button onclick="mostrarOpciones('Nautilux', 'Base secreta, mapas de tesoro, navegación avanzada', '9.99€')" class="bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded">Opciones</button>
       </div>
     </div>
-
-    <!-- Puedes añadir más rangos aquí -->
+    </div>
   </div>
-</div>
 
   <!-- Panel de Chat -->
   <div id="chatPanel" class="modal bg-blue-950 bg-opacity-90 text-white hidden">
@@ -254,3 +248,4 @@
   </script>
 </body>
 </html>
+
