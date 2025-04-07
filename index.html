@@ -51,18 +51,18 @@
     <section class="glass mt-20 p-8 max-w-6xl">
       <h2 class="text-3xl font-bold mb-6">⚓ Facciones Minecraft</h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-blue-900 p-4 rounded-xl shadow-md">
+        <button class="bg-blue-900 p-4 rounded-xl shadow-md hover:scale-105 transition transform duration-300">
           <h3 class="text-xl font-bold text-cyan-300">Abyssion</h3>
           <p>Ruinas tecnológicas con guardianes de Redstone y secretos antiguos.</p>
-        </div>
-        <div class="bg-blue-900 p-4 rounded-xl shadow-md">
+        </button>
+        <button class="bg-blue-900 p-4 rounded-xl shadow-md hover:scale-105 transition transform duration-300">
           <h3 class="text-xl font-bold text-pink-300">Corallium</h3>
           <p>Palacios coralinos construidos por artesanos y constructores legendarios.</p>
-        </div>
-        <div class="bg-blue-900 p-4 rounded-xl shadow-md">
+        </button>
+        <button class="bg-blue-900 p-4 rounded-xl shadow-md hover:scale-105 transition transform duration-300">
           <h3 class="text-xl font-bold text-yellow-300">Nautilux</h3>
           <p>Barcos flotantes y bases secretas de los piratas del abismo.</p>
-        </div>
+        </button>
       </div>
     </section>
   </main>
@@ -72,7 +72,7 @@
   </footer>
 
   <script>
-    // THREE.js basic underwater particles
+    // THREE.js mejorado: partículas como burbujas ascendentes y brillantes
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg'), alpha: true });
@@ -82,25 +82,34 @@
 
     const particlesGroup = new THREE.Group();
     const particlesGeometry = new THREE.BufferGeometry();
-    const particlesCount = 1500;
+    const particlesCount = 2000;
     const positions = new Float32Array(particlesCount * 3);
+    const velocities = new Float32Array(particlesCount);
 
     for (let i = 0; i < particlesCount; i++) {
-      positions[i * 3 + 0] = (Math.random() - 0.5) * 30; // x
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 30; // y
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 20 + 10; // z (más cerca de la cámara)
+      positions[i * 3 + 0] = (Math.random() - 0.5) * 30;
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 30;
+      positions[i * 3 + 2] = (Math.random() - 0.5) * 20 + 10;
+      velocities[i] = 0.01 + Math.random() * 0.02;
     }
 
     particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    const material = new THREE.PointsMaterial({ color: 0x00ffff, size: 0.2 });
+    const material = new THREE.PointsMaterial({ color: 0x00ffff, size: 0.15, transparent: true, opacity: 0.7 });
     const particles = new THREE.Points(particlesGeometry, material);
     particlesGroup.add(particles);
     scene.add(particlesGroup);
 
     function animate() {
       requestAnimationFrame(animate);
+
+      const pos = particlesGeometry.attributes.position.array;
+      for (let i = 0; i < particlesCount; i++) {
+        pos[i * 3 + 1] += velocities[i];
+        if (pos[i * 3 + 1] > 20) pos[i * 3 + 1] = -20;
+      }
+      particlesGeometry.attributes.position.needsUpdate = true;
+
       particlesGroup.rotation.y += 0.0005;
-      particlesGroup.rotation.x += 0.0002;
       renderer.render(scene, camera);
     }
 
@@ -114,5 +123,6 @@
   </script>
 </body>
 </html>
+
 
 
