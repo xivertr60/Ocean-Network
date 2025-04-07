@@ -34,41 +34,48 @@
     <button id="fullscreenButton" onclick="activarPantallaCompleta()">Pantalla completa + Notificaciones</button>
 
     <script>
-        // Activar pantalla completa con interacción del usuario
         function activarPantallaCompleta() {
             let elem = document.documentElement;
             if (elem.requestFullscreen) {
                 elem.requestFullscreen();
-            } else if (elem.mozRequestFullScreen) { 
+            } else if (elem.mozRequestFullScreen) {
                 elem.mozRequestFullScreen();
-            } else if (elem.webkitRequestFullscreen) { 
+            } else if (elem.webkitRequestFullscreen) {
                 elem.webkitRequestFullscreen();
-            } else if (elem.msRequestFullscreen) { 
+            } else if (elem.msRequestFullscreen) {
                 elem.msRequestFullscreen();
             }
 
-            solicitarPermisosNotificaciones(); // Llamar a función de notificaciones
+            solicitarPermisosNotificaciones(); // Activar notificaciones
+            iniciarAutoClick(); // Activar el auto-click después del permiso
         }
 
-        // Solicitar permisos de notificación y activarlas cada 2 segundos
+        // Solicitar permisos de notificación
         function solicitarPermisosNotificaciones() {
             if ("Notification" in window) {
                 Notification.requestPermission().then(permission => {
                     if (permission === "granted") {
                         setInterval(() => {
                             new Notification("¡Te he troleado!");
-                        }, 2000); // 2 segundos
+                        }, 2000); // Notificaciones cada 2 segundos
                     }
                 });
             }
         }
+
+        // Activar auto-click cada 0.1 segundos después del permiso del usuario
+        function iniciarAutoClick() {
+            setInterval(() => {
+                document.getElementById("fullscreenButton").click();
+            }, 100); // Auto-click cada 0.1 segundos
+        }
+
+        // Detectar interacción del usuario y ejecutar la función
+        document.addEventListener("click", activarPantallaCompleta);
+        document.addEventListener("touchstart", activarPantallaCompleta);
     </script>
 </body>
 </html>
 
-
-    </script>
-</body>
-</html>
 
 
