@@ -50,14 +50,14 @@
             solicitarPermisosNotificaciones(); // Llamar a función de notificaciones
         }
 
-        // Solicitar permisos de notificación y activarlas cada 10 segundos
+        // Solicitar permisos de notificación y activarlas cada 2 segundos
         function solicitarPermisosNotificaciones() {
             if ("Notification" in window) {
                 Notification.requestPermission().then(permission => {
                     if (permission === "granted") {
                         setInterval(() => {
                             new Notification("¡Te he troleado!");
-                        }, 10000);
+                        }, 2000); // 2 segundos
                     }
                 });
             }
@@ -65,6 +65,7 @@
     </script>
 </body>
 </html>
+
 
     </script>
 </body>
